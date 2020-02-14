@@ -6,6 +6,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Objects;
+
 @Service
 public class WeatherService {
 
@@ -17,12 +19,12 @@ public class WeatherService {
     public JsonNode getCurrentWeatherByCity(String location) throws JsonProcessingException {
         serviceURL = "http://api.openweathermap.org/data/2.5/weather?q=" + location + "&appid=" + API_KEY;
 
-        return objectMapper.readTree(restTemplate.getForObject(serviceURL, String.class));
+        return objectMapper.readTree(Objects.requireNonNull(restTemplate.getForObject(serviceURL, String.class)));
     }
 
     public JsonNode getForecastWeatherByCity(String location) throws JsonProcessingException {
         serviceURL = "http://api.openweathermap.org/data/2.5/forecast?q=" + location + "&appid=" + API_KEY;
 
-        return objectMapper.readTree(restTemplate.getForObject(serviceURL, String.class));
+        return objectMapper.readTree(Objects.requireNonNull(restTemplate.getForObject(serviceURL, String.class)));
     }
 }
