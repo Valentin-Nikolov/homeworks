@@ -1,9 +1,11 @@
-package homework.impl;
+package homework.services.impl;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import homework.interfaces.WeatherInterface;
+import homework.services.WeatherInterface;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -13,9 +15,21 @@ import java.util.Objects;
 public class WeatherService implements WeatherInterface {
 
     private static final String API_KEY = "b32bf897f5f3f1b59cf82c39584b817f";
-    private RestTemplate restTemplate = new RestTemplate();
-    private ObjectMapper objectMapper = new ObjectMapper();
+    @Autowired
+    private RestTemplate restTemplate;
+    @Autowired
+    private ObjectMapper objectMapper;
     private String serviceURL;
+
+    @Bean
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
+    }
+
+    @Bean
+    public ObjectMapper objectMapper() {
+        return new ObjectMapper();
+    }
 
     @Override
     public JsonNode getCurrentWeatherByCity(String location) throws JsonProcessingException {
