@@ -13,8 +13,7 @@ public class JDBCConfig {
   public DataSource mysqlDataSource(){
     DriverManagerDataSource dataSource = new DriverManagerDataSource();
     dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
-//    dataSource.setUrl("jdbc:mysql://172.17.0.2:3306/homework");
-    dataSource.setUrl("jdbc:mysql://sqldb.kerrigan-test-env.sandbox.sbflcn.io:3333/homework");
+    dataSource.setUrl("jdbc:mysql://172.17.0.2:3306/homework");
     dataSource.setUsername("root");
     dataSource.setPassword("test");
 
