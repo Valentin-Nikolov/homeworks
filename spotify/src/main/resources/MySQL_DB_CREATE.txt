@@ -1,0 +1,33 @@
+docker run --name sql --hostname mysql -e MYSQL_ROOT_PASSWORD=test mysql:5.7.17
+docker inspect sql (used to obtain the host IP address)
+mysql --host 172.17.0.2 --port 3306 -u root -p
+
+CREATE DATABASE homework;
+
+CREATE TABLE customers (
+    id int auto_increment NOT NULL PRIMARY KEY,
+    first_name varchar(255),
+    last_name varchar(255),
+    email varchar(255),
+    date_of_birth date,
+    is_payed bool
+);
+
+
+CREATE TABLE artists (
+    id int auto_increment NOT NULL PRIMARY KEY,
+    first_name varchar(255),
+    last_name varchar(255),
+    date_of_birth date,
+    genre varchar(255)
+);
+
+
+CREATE TABLE songs (
+    id int auto_increment NOT NULL PRIMARY KEY,
+    title varchar(255),
+    date_of_publishing date,
+    duration int,
+    artist_id int,
+    FOREIGN KEY (artist_id) REFERENCES homework.artists (id)
+);
