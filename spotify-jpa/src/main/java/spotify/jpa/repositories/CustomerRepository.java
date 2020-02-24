@@ -22,9 +22,9 @@ public interface CustomerRepository extends CrudRepository<Customer, Long> {
             "is_payed = :is_payed " +
             "WHERE id = :id", nativeQuery = true)
     void updateCustomer(@Param("id") Long id,
-                         @Param("first_name") String first_name,
-                         @Param("last_name") String last_name,
-                         @Param("email") String email,
-                         @Param("date_of_birth") Date date_of_birth,
-                         @Param("is_payed") boolean is_payed);
+                        @Param("first_name") String first_name,
+                        @Param("last_name") String last_name,
+                        @Param("email") String email,
+                        @Param("date_of_birth") Date date_of_birth,
+                        @Param("is_payed") boolean is_payed);
 }
