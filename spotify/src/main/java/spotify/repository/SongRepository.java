@@ -43,6 +43,15 @@ public class SongRepository {
     return jdbcTemplate.queryForObject(sql, new HashMap<>(), new SongRowMapper());
   }
 
+  public String getTitle(final long id) {
+    final String sql = "SELECT title FROM songs WHERE id = " + id;
+
+    final String[] title = new String[1];
+    jdbcTemplate.query(sql, (rs, rowNum) -> title[0] = rs.getString("title"));
+
+    return title[0];
+  }
+
   public List<Song> getAll() {
     final String sql = "SELECT * FROM songs";
 

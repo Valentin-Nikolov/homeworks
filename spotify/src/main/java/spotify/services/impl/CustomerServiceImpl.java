@@ -47,7 +47,8 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Song playSong(long id) {
-        return songRepository.get(id);
+    public String playSong(long id) {
+
+        return "Playing song: " + songRepository.getTitle(id);
     }
 }

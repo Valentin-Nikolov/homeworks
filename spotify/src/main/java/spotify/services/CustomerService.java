@@ -17,5 +17,5 @@ public interface CustomerService {
 
     void update(Customer customer);
 
-    Song playSong(long id);
+    String playSong(long id);
 }
