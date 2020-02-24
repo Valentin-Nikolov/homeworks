@@ -1,7 +1,9 @@
-package spotify.jpa;
+package spotify.jpa.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import spotify.jpa.entities.Song;
+import spotify.jpa.repositories.SongRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -14,7 +16,7 @@ public class SongController {
     private SongRepository repository;
 
     @PostMapping(value = "/add")
-    public void addCustomer(@RequestBody final Song song) {
+    public void addSong(@RequestBody final Song song) {
         repository.save(song);
     }
 
@@ -35,7 +37,7 @@ public class SongController {
 
     @PutMapping(value = "/edit/{id}")
 	public void updateSong(@PathVariable final long id, @RequestBody final Song song) {
-        repository.updateCustomer(id, song.getTitle(), song.getDateOfPublishing(), song.getDuration(), song.getArtistId());
+        repository.updateSong(id, song.getTitle(), song.getDateOfPublishing(), song.getDuration(), song.getArtistId());
     };
 
 }

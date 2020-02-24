@@ -1,7 +1,10 @@
-package spotify.jpa;
+package spotify.jpa.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import spotify.jpa.entities.Customer;
+import spotify.jpa.repositories.CustomerRepository;
+import spotify.jpa.repositories.SongRepository;
 
 import java.util.List;
 import java.util.Optional;

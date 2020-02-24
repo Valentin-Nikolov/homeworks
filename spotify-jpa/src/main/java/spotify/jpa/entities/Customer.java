@@ -1,4 +1,4 @@
-package spotify.jpa;
+package spotify.jpa.entities;
 
 import javax.persistence.*;
 import java.util.Date;
