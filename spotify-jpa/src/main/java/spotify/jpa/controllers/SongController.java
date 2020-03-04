@@ -3,7 +3,7 @@ package spotify.jpa.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import spotify.jpa.entities.Song;
-import spotify.jpa.repositories.SongRepository;
+import spotify.jpa.services.impl.SongServiceImpl;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,31 +13,35 @@ import java.util.Optional;
 public class SongController {
 
     @Autowired
-    private SongRepository repository;
+    private SongServiceImpl songService;
+
+    public SongController(SongServiceImpl songService) {
+        this.songService = songService;
+    }
 
     @PostMapping(value = "/add")
     public void addSong(@RequestBody final Song song) {
-        repository.save(song);
+        songService.addSong(song);
     }
 
     @DeleteMapping(value = "/del/{id}")
 	public void deleteSong(@PathVariable final long id) {
-        repository.deleteById(id);
+        songService.deleteSong(id);
     };
 
     @GetMapping(value = "/get/{id}")
 	public Optional<Song> getSong(@PathVariable final long id)  {
-        return repository.findById(id);
+        return songService.getSong(id);
     };
 
     @GetMapping(value = "/get/all")
     public List<Song> getAllSongs() {
-        return (List<Song>) repository.findAll();
+        return (List<Song>) songService.getAllSongs();
     }
 
     @PutMapping(value = "/edit/{id}")
 	public void updateSong(@PathVariable final long id, @RequestBody final Song song) {
-        repository.updateSong(id, song.getTitle(), song.getDateOfPublishing(), song.getDuration(), song.getArtistId());
+        songService.updateSong(id, song);
     };
 
 }

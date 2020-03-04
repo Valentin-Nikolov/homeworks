@@ -4,8 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import spotify.jpa.entities.Artist;
 import spotify.jpa.entities.Song;
-import spotify.jpa.repositories.ArtistRepository;
-import spotify.jpa.repositories.SongRepository;
+import spotify.jpa.services.impl.ArtistServiceImpl;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,49 +14,50 @@ import java.util.Optional;
 public class ArtistController {
 
     @Autowired
-    private ArtistRepository repository;
-    @Autowired
-    private SongRepository songRepository;
+    private ArtistServiceImpl artistService;
+
+    public ArtistController(ArtistServiceImpl artistService) {
+        this.artistService = artistService;
+    }
+
 
     @PostMapping(value = "/add")
     public void addArtist(@RequestBody final Artist artist) {
-        repository.save(artist);
+        artistService.addArtist(artist);
     }
 
     @DeleteMapping(value = "/del/{id}")
 	public void deleteArtist(@PathVariable final long id) {
-        repository.deleteById(id);
+        artistService.deleteArtist(id);
     };
 
     @GetMapping(value = "/get/{id}")
 	public Optional<Artist> getArtist(@PathVariable final long id)  {
-        return repository.findById(id);
+        return artistService.getArtist(id);
     };
 
     @GetMapping(value = "/get/all")
     public List<Artist> getAllArtists() {
-        return (List<Artist>) repository.findAll();
+        return (List<Artist>) artistService.getAllArtists();
     }
 
     @PutMapping(value = "/edit/{id}")
 	public void updateArtist(@PathVariable final long id, @RequestBody final Artist artist) {
-        repository.updateArtist(id, artist.getFirstName(), artist.getLastName(),
-                artist.getDateOfBirth(), artist.getGenre());
+        artistService.updateArtist(id, artist);
     };
 
     @PostMapping(value = "/song/add")
     public void addSong(@RequestBody final Song song) {
-        songRepository.save(song);
+        artistService.addSong(song);
     }
 
     @PutMapping(value = "/song/edit/{id}")
-    public void updateSong(@PathVariable final long id, @RequestBody final Song song) {
-        songRepository.updateSong(id, song.getTitle(), song.getDateOfPublishing(),
-                song.getDuration(), song.getArtistId());
+    public void updateSong(@PathVariable final long id, @RequestBody final Song song, @RequestBody final Artist artist) {
+        artistService.updateSong(id, song, artist);
     };
 
     @DeleteMapping(value = "/song/del/{id}")
     public void deleteSong(@PathVariable final long id) {
-        songRepository.deleteById(id);
+        artistService.deleteSong(id);
     };
 }

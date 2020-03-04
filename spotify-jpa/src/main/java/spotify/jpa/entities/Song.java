@@ -13,22 +13,21 @@ public class Song {
     private String title;
     private Date dateOfPublishing;
     private int duration;
-    @JoinColumn(name = "artistId", nullable = false, foreignKey = @ForeignKey(name = "fk_flows_artists"))
-    private long artistId;
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "artistId", nullable = false, foreignKey = @ForeignKey(name = "fk_flows_artists"))
-//    private Artist artist;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "artist_id", nullable = false, foreignKey = @ForeignKey(name = "fk_songs_artists"))
+    private Artist artist;
 
 
     public Song() {
     }
 
-    public Song(long id, String title, Date dateOfPublishing, int duration, long artistId) {
+    public Song(long id, String title, Date dateOfPublishing, int duration, Artist artist) {
         this.id = id;
         this.title = title;
         this.dateOfPublishing = dateOfPublishing;
         this.duration = duration;
-        this.artistId = artistId;
+        this.artist = artist;
     }
 
     public long getId() {
@@ -63,12 +62,12 @@ public class Song {
         this.duration = duration;
     }
 
-    public long getArtistId() {
-        return artistId;
+    public Artist getArtist() {
+        return artist;
     }
 
-    public void setArtistId(long artistId) {
-        this.artistId = artistId;
+    public void setArtist(Artist artist) {
+        this.artist = artist;
     }
 
     @Override
@@ -78,7 +77,7 @@ public class Song {
                 ", title='" + title + '\'' +
                 ", dateOfPublishing=" + dateOfPublishing +
                 ", duration=" + duration +
-                ", artist=" + artistId +
+                ", artist=" + artist +
                 '}';
     }
 }

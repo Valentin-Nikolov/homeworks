@@ -3,8 +3,7 @@ package spotify.jpa.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import spotify.jpa.entities.Customer;
-import spotify.jpa.repositories.CustomerRepository;
-import spotify.jpa.repositories.SongRepository;
+import spotify.jpa.services.impl.CustomerServiceImpl;
 
 import java.util.List;
 import java.util.Optional;
@@ -14,39 +13,41 @@ import java.util.Optional;
 public class CustomerController {
 
     @Autowired
-    private CustomerRepository repository;
-    @Autowired
-    private SongRepository songRepository;
+    private CustomerServiceImpl customerService;
+
+    public CustomerController(CustomerServiceImpl customerService) {
+        this.customerService = customerService;
+    }
+
 
     @PostMapping(value = "/add")
     public void addCustomer(@RequestBody final Customer customer) {
-        repository.save(customer);
+        customerService.addCustomer(customer);
     }
 
     @DeleteMapping(value = "/del/{id}")
 	public void deleteCustomer(@PathVariable final long id) {
-        repository.deleteById(id);
+        customerService.deleteCustomer(id);
     };
 
     @GetMapping(value = "/get/{id}")
 	public Optional<Customer> getCustomer(@PathVariable final long id)  {
-        return repository.findById(id);
+        return customerService.getCustomer(id);
     };
 
     @GetMapping(value = "/get/all")
     public List<Customer> getAllCustomers() {
-        return (List<Customer>) repository.findAll();
+        return customerService.getAllCustomers();
     }
 
     @PutMapping(value = "/edit/{id}")
 	public void updateCustomer(@PathVariable final long id, @RequestBody final Customer customer) {
-        repository.updateCustomer(id, customer.getFirstName(), customer.getLastName(), customer.getEmail(),
-                customer.getDateOfBirth(), customer.getIsPayed());
+        customerService.updateCustomer(id, customer);
     };
 
     @GetMapping(value = "/play/{id}")
     public void playSong(@PathVariable final long id) {
-        System.out.println("Playing song: " + songRepository.playSong(id) + " ...");
+        customerService.playSong(id);
     }
 
 }
